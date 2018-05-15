@@ -1,7 +1,6 @@
 <?php
 
 namespace Tests\Unit;
-
 use App\DonationFee;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -23,19 +22,28 @@ class DonationFeeTest extends TestCase
         $actual = $donationFees->getCommissionAmount();
 
         // Alors la Valeur de la commission doit être de 10
-        $expected = 10;
-        $this->assertEquals($expected, $actual);
+       $expected = 10;
+       $this->assertEquals($expected, $actual);
+   }
 
-
-    }
-    public function testAmountCollectedGetter()
-    {
+   public function testAmountCollectedGetter()
+   {
         // Etant donné qu'une commission est de 10%
         $donationFees = new DonationFee(100, 10);
         // Lorsqu'on appel la méthode getAmountCollected()
-       $actual = $donationFees->getAmountCollected();
+        $actual = $donationFees->getAmountCollected();
         // Alors la Valeur du montant perçu doit être de 90
         $expected = 90;
         $this->assertEquals($expected, $actual);
     }
+   public function testCommissionPercentageException()
+    {
+        $this->expectException(\Exception::class);
+        $donationFees = new DonationFee(100, 15);
+    }
 }
+
+
+
+
+
