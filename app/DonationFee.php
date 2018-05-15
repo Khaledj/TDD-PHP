@@ -15,14 +15,17 @@ class DonationFee
     private $donation;
     private $commissionPercentage;
 
+
     public function __construct($donation, $commissionPercentage)
     {
         $this->donation = $donation;
         $this->commissionPercentage = $commissionPercentage;
+
     }
 
     public function getCommissionAmount()
     {
-        return 10;
+        $commission = ($this->donation/100) * $this->commissionPercentage;
+        return $commission;
     }
 }
