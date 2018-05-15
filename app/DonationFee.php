@@ -28,4 +28,9 @@ class DonationFee
         $commission = ($this->donation/100) * $this->commissionPercentage;
         return $commission;
     }
+    public function getAmountCollected()
+    {
+      $amount = ($this->donation) - $this->getCommissionAmount();
+      return $amount;
+    }
 }
