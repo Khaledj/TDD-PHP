@@ -11,11 +11,8 @@ namespace App;
 
 class DonationFee
 {
-
     private $donation;
     private $commissionPercentage;
-
-
 
     public function __construct($donation, $commissionPercentage)
     {
@@ -44,5 +41,22 @@ class DonationFee
     {
         $commission = ($this->donation/100) * $this->commissionPercentage + Commission::fixedFee;
         return $commission;
+    }
+    public function getLimitFixedFeeAndCommissionAmount()
+    {
+        $commission = $this->getFixedAndCommissionFeeAmount() ;
+        if($commission > 500) {
+            $commission = 500;
+        }
+        return $commission;
+    }
+    public function getSummary()
+    {
+        $summary = array('donation'=>$this->donation,
+                         'fixedFee'=>Commission::fixedFee,
+                         'commission'=>$this->getCommissionAmount(),
+                         'fixedAndCommission'=>$this->getFixedAndCommissionFeeAmount(),
+                         'amountCollected'=> $this->donation - $this->getFixedAndCommissionFeeAmount());
+            return $summary;
     }
 }

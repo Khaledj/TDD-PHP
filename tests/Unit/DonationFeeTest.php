@@ -61,6 +61,39 @@ class DonationFeeTest extends TestCase
         $expected = 60;
         $this->assertEquals($expected, $actual);
     }
+    public function testLimitFixedFeeAndCommissionAmountGetter()
+    {
+        // Etant donné une donation
+        $donationFees = new DonationFee(6000, 10);
+
+        // Lorsqu'on appel la méthode getLimitFixedFeeAndCommissionAmount()
+        $actual = $donationFees->getLimitFixedFeeAndCommissionAmount();
+
+        // Alors la Valeur de la commission doit être de 500
+        $expected = 500;
+        $this->assertEquals($expected, $actual);
+    }
+    public function testArraySummary()
+    {
+        $donationFees = new DonationFee(1000, 10);
+
+        $actual = $donationFees->getSummary();
+
+        $this->assertArrayHasKey('donation',$actual);
+        $this->assertEquals(1000, $actual['donation']);
+
+        $this->assertArrayHasKey('fixedFee',$actual);
+        $this->assertEquals(50, $actual['fixedFee']);
+
+        $this->assertArrayHasKey('commission',$actual);
+        $this->assertEquals(100, $actual['commission']);
+
+        $this->assertArrayHasKey('fixedAndCommission',$actual);
+        $this->assertEquals(150, $actual['fixedAndCommission']);
+
+        $this->assertArrayHasKey('amountCollected',$actual);
+        $this->assertEquals(850, $actual['amountCollected']);
+    }
 
 }
 
