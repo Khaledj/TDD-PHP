@@ -21,6 +21,9 @@ class DonationFee
         if($commissionPercentage < 0 || $commissionPercentage >30) {
             throw new \Exception("la valeur doit être compris entre 0 et 30");
         }
+        if($donation < 100 || (!is_int($donation/100))) {
+            throw new \Exception("la valeur doit être supérieur à 100");
+        }
         $this->donation = $donation;
         $this->commissionPercentage = $commissionPercentage;
 

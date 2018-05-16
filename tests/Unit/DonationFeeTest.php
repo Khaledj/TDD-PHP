@@ -39,7 +39,15 @@ class DonationFeeTest extends TestCase
    public function testCommissionPercentageException()
     {
         $this->expectException(\Exception::class);
-        $donationFees = new DonationFee(100, 15);
+        $donationFees = new DonationFee(100, 40);
+    }
+    public function testDonationException()
+    {
+        //Etant donné une donation en entier positif
+        //lorqu'il y a une valeur négatif ou inférieur à 100 ou non entier
+        //Alors retourne une exception
+        $this->expectException(\Exception::class);
+        $donationFees = new DonationFee(200, 15);
     }
 }
 
