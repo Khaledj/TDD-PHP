@@ -16,6 +16,7 @@ class DonationFee
     private $commissionPercentage;
 
 
+
     public function __construct($donation, $commissionPercentage)
     {
         if($commissionPercentage < 0 || $commissionPercentage >30) {
@@ -39,5 +40,9 @@ class DonationFee
       $amount = ($this->donation) - $this->getCommissionAmount();
       return $amount;
     }
-
+    public function getFixedAndCommissionFeeAmount()
+    {
+        $commission = ($this->donation/100) * $this->commissionPercentage + Commission::fixedFee;
+        return $commission;
+    }
 }

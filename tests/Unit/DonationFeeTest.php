@@ -47,8 +47,21 @@ class DonationFeeTest extends TestCase
         //lorqu'il y a une valeur négatif ou inférieur à 100 ou non entier
         //Alors retourne une exception
         $this->expectException(\Exception::class);
-        $donationFees = new DonationFee(200, 15);
+        $donationFees = new DonationFee(10, 15);
     }
+    public function testFixedAndCommissionFeeAmountGetter()
+    {
+        // Etant donné une donation de 100 et commission de 10%
+        $donationFees = new DonationFee(100, 10);
+
+        // Lorsqu'on appel la méthode getFixedAndCommissionFeeAmount()
+        $actual = $donationFees->getFixedAndCommissionFeeAmount();
+
+        // Alors la Valeur de la commission doit être de 60
+        $expected = 60;
+        $this->assertEquals($expected, $actual);
+    }
+
 }
 
 
