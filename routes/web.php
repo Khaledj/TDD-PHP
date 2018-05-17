@@ -18,3 +18,8 @@ Route::get('/project',function () {
  return response("OK",200);
 });
 
+Route::get('/project',function(){
+    return view('project');
+});
+
+Route::get('/project','ProjectController@listeProject');
