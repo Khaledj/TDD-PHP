@@ -17,11 +17,15 @@
 </head>
 <body>
 
-@foreach ($detailproject as $project)
-    <h1> Projet {{$project->projectName}}  </h1>
-        <p>Detail du projet : {{$project->descriptive}}</p>
-        <p>Création du projet : {{$project->created_at}}</p>
-@endforeach
+{{--@foreach ($detailproject as $project)--}}
+    {{--<h1> Projet {{$project->projectName}}  </h1>--}}
+        {{--<p>Detail du projet : {{$project->descriptive}}</p>--}}
+        {{--<p>Création du projet : {{$project->created_at}}</p>--}}
+{{--@endforeach--}}
+<h1> {{$user->id}}</h1>
+<h1>{{$user->name}}</h1>
+<h1>{{$project->projectName}}</h1>
+
 </body>
 </html>
 

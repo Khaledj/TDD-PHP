@@ -9,6 +9,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Project;
+use App\User;
 
 class ProjectController extends Controller
 {
@@ -18,8 +19,12 @@ class ProjectController extends Controller
     }
     public function detailProject($id)
     {
-        //Je selectionne le Nom,Prix en fonction du code de la boisson et je retourne un tableau associatif detailboisson//
-        $project = Project::select("*")->where("id",$id)->get();
-        return view('detailproject',['detailproject' => $project]);
+
+        //$project = Project::select("*")->where("id",$id)->get();
+        $project=Project::find($id);
+       $user = $project->user->find($project->user_id);
+//        return view('detailproject',['detailproject' => $user]);
+        return view('detailproject',compact('user','project'));
     }
+
 }
