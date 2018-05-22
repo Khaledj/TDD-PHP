@@ -10,6 +10,7 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use App\Project;
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 
@@ -43,6 +44,14 @@ class ProjectTest extends TestCase
         $project = factory(Project::class)->create();
         $response = $this->get('/project/'.$project->id);
         $response->assertSee($project->projectName);
+    }
+
+    public function testCreateUserProject()
+    {
+        $project = factory(Project::class)->create();
+        $user = $project->user->find($project->user_id);
+        $check = Project::find(3)->user->name;
+        $this->assertTrue($check == $user->name);
     }
 }
 

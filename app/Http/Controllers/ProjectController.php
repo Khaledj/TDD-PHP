@@ -21,10 +21,12 @@ class ProjectController extends Controller
     {
 
         //$project = Project::select("*")->where("id",$id)->get();
+        //return view('detailproject',['detailproject' => $user]);
         $project=Project::find($id);
-       $user = $project->user->find($project->user_id);
-//        return view('detailproject',['detailproject' => $user]);
+        $user = $project->user->find($project->user_id);
         return view('detailproject',compact('user','project'));
+
+
     }
 
 }
