@@ -19,7 +19,8 @@
 <h1> Liste des projets </h1>
 @foreach ($projects as $project)
     <ul>
-        <li> {{$project->projectName}}</li>
+
+        <li> <a href ="/project/{{$project->id}}">{{$project->projectName}}</a></li>
     </ul>
     @endforeach
 </body>

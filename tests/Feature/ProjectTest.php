@@ -7,29 +7,45 @@
  */
 
 namespace Tests\Feature;
+
 use Tests\TestCase;
 use App\Project;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+
 
 
 class ProjectTest extends TestCase
 {
- public function testStatus()
-{
-    $response = $this->get('/project');
-    $response->assertStatus(200);
-}
-    public function testTitre()
-{
-    $response = $this->get('/project');
-    $response->assertSee("<h1> Liste des projets </h1>");
-}
+    use RefreshDatabase;
 
-   public function testTitleProject()
+    public function testStatus()
     {
-        $project = factory(Project::class)->create();
-      $response = $this->get('/project');
-    $response->assertSee($project->projectName);
-
+        $response = $this->get('/project');
+        $response->assertStatus(200);
     }
 
+    public function testTitre()
+    {
+        $response = $this->get('/project');
+        $response->assertSee("<h1> Liste des projets </h1>");
+    }
+
+    public function testTitleProject()
+    {
+        $project = factory(Project::class)->create();
+        //dd($project);
+        $response = $this->get('/project');
+        $response->assertSee($project->projectName);
+    }
+
+    public function testTitleDetailProject()
+    {
+        $project = factory(Project::class)->create();
+        $response = $this->get('/project/'.$project->id);
+        $response->assertSee($project->projectName);
+    }
 }
+
+
+
+

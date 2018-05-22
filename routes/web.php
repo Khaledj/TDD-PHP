@@ -23,3 +23,4 @@ Route::get('/project',function(){
 });
 
 Route::get('/project','ProjectController@listeProject');
+Route::get('/project/{id}','ProjectController@detailProject');
