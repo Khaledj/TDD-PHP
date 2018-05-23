@@ -19,10 +19,10 @@
 <h1> Liste des projets </h1>
 @foreach ($projects as $project)
     <ul>
-
         <li> <a href ="/project/{{$project->id}}">{{$project->projectName}}</a></li>
     </ul>
     @endforeach
+<a href = "/add" > <button type="button" class="btn btn-success"> Ajouter un projet  </button></a>
 </body>
 </html>
 

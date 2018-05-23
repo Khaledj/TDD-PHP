@@ -12,7 +12,7 @@ use Tests\TestCase;
 use App\Project;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-
+use Illuminate\Support\Facades\Auth;
 
 
 class ProjectTest extends TestCase
@@ -42,7 +42,7 @@ class ProjectTest extends TestCase
     public function testTitleDetailProject()
     {
         $project = factory(Project::class)->create();
-        $response = $this->get('/project/'.$project->id);
+        $response = $this->get('/project/' . $project->id);
         $response->assertSee($project->projectName);
     }
 
@@ -52,6 +52,23 @@ class ProjectTest extends TestCase
         $user = $project->user->find($project->user_id);
         $check = Project::find(3)->user->name;
         $this->assertTrue($check == $user->name);
+    }
+
+    public function testNameUserDetailProject()
+    {
+        $project = factory(Project::class)->create();
+        $response = $this->get('/project/' . $project->id);
+        $response->assertSee($project->user->name);
+    }
+
+    public function testAddProjectUser()
+    {
+        $user = factory(User::class)->create();
+        $this->actingAs($user)
+             ->get('/project');
+        $this->be($user);
+        $response = $this->get('/add');
+        $response->assertSee("<h1>Ajouter un projet</h1>");
     }
 }
 

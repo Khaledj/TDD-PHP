@@ -19,13 +19,14 @@
 
 {{--@foreach ($detailproject as $project)--}}
     {{--<h1> Projet {{$project->projectName}}  </h1>--}}
-        {{--<p>Detail du projet : {{$project->descriptive}}</p>--}}
+        {{--<p>Detail du projet :{{$project->descriptive}} </p>--}}
         {{--<p>Création du projet : {{$project->created_at}}</p>--}}
 {{--@endforeach--}}
-<h1> {{$user->id}}</h1>
-<h1>{{$user->name}}</h1>
-<h1>{{$project->projectName}}</h1>
-
+<h1> Projet : {{$project->projectName}}</h1>
+<p> Detail du projet :{{$project->descriptive}} </p>
+<p>Création du projet : {{$project->created_at}}</p>
+<p> id de l'utilisateur : {{$user->id}}</p>
+<p>nom de l'utilisateur : {{$user->name}}</p>
 </body>
 </html>
 

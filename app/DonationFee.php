@@ -34,7 +34,7 @@ class DonationFee
     }
     public function getAmountCollected()
     {
-      $amount = ($this->donation) - $this->getCommissionAmount();
+      $amount = ($this->donation) - $this->getFixedAndCommissionFeeAmount();
       return $amount;
     }
     public function getFixedAndCommissionFeeAmount()
