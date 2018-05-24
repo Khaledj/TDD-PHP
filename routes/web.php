@@ -28,7 +28,9 @@ Route::get('/project','ProjectController@listeProject');
 Route::get('/project/{id}','ProjectController@detailProject');
 
 Route::get('/add','ProjectController@create')->middleware('auth');
-Route::post('/project','ProjectController@store');
+Route::post('/project','ProjectController@store')->middleware('auth');
 
+Route::get('/project/{projectcode}/edit','ProjectController@edit')->middleware('auth');
+Route::put('/project/{projectcode}','ProjectController@update')->middleware('auth');
 
 

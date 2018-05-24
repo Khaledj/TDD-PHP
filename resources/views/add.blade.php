@@ -19,16 +19,12 @@
     <form method="post" action="/project">
         {{csrf_field()}}
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
         Nom du projet :<br>
-        <b> <input type="text" name="projectName" placeholder="Ecrire un nom de projet"> </b>
+         <input type="text" name="projectName" placeholder="Ecrire un nom de projet">
         <br>
         Description du projet :<br>
-        <b> <input type="text" name="descriptive" placeholder="Ecrire une description"> </b>
+        <input type="text" name="descriptive" placeholder="Ecrire une description">
         <br>
-        {{--Date de création :<br>--}}
-        {{--<b> <input type="date" name="created_at" placeholder="Ecrire un nom de projet"> </b>--}}
-        {{--<br>--}}
         <input type="submit" value="submit">
     </form>
 

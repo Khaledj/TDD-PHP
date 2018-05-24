@@ -22,11 +22,13 @@
         {{--<p>Detail du projet :{{$project->descriptive}} </p>--}}
         {{--<p>Création du projet : {{$project->created_at}}</p>--}}
 {{--@endforeach--}}
+
 <h1> Projet : {{$project->projectName}}</h1>
 <p> Detail du projet :{{$project->descriptive}} </p>
 <p>Création du projet : {{$project->created_at}}</p>
 <p> id de l'utilisateur : {{$user->id}}</p>
 <p>nom de l'utilisateur : {{$user->name}}</p>
+<a href="/project/{{$project->id}}/edit"> <button type="button" class="btn btn-primary"> Modifier </button></a>
 </body>
 </html>
 

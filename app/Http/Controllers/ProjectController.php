@@ -21,23 +21,42 @@ class ProjectController extends Controller
         $projects = Project::select("projectName","id")->get();
         return view('project',['projects'=>$projects]);
     }
+
     public function detailProject($id)
     {
-        //$project = Project::select("*")->where("id",$id)->get();
-        //return view('detailproject',['detailproject' => $user]);
         $project=Project::find($id);
         $user = $project->user->find($project->user_id);
-        return view('detailproject',compact('user','project'));
+        return view('detailproject', compact('user','project'));
     }
+
     public function create(){
         return view('add');
     }
+
     public function store(Request $request) {
-        $project = new Project(); // création d'une vente //
+        $project = new Project(); // création d'un projet//
         $project->projectName = $request->input('projectName');
         $project->descriptive = $request->input('descriptive');
         $project->user_id = Auth::user()->id;
-        $project->save(); //je sauvegarde une nouvelle vente*/
+        $project->save(); //je sauvegarde un nouveau projet*/
         return redirect('/project');
+    }
+    public function edit($projectcode) {
+        $project = Project::find($projectcode);
+        if(Auth::user()->id == $projectcode) {
+            return view('modification', compact('project'));
+        }else {
+            echo "tu n'est pas l'auteur tu ne peux pas modifier le projet";
+        }
+    }
+
+
+    public function update(Request $request,$projectcode) {
+
+        $project = Project::find($projectcode);
+        $project->projectName= $request->input('projectName');
+        $project->descriptive = $request->input('descriptive');
+        $project->save();
+        return redirect('/project/'.$projectcode);
     }
 }
