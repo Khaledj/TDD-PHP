@@ -13,7 +13,7 @@ use App\Project;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Auth\AuthenticationException;
-
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 
 class ProjectTest extends TestCase
@@ -72,7 +72,7 @@ class ProjectTest extends TestCase
         //Etant donné un projet créé
         $project = factory(Project::class)->create();
         //Lorsqu'on affiche la page /project/id (detail du projet)
-        $response = $this->get('/project/' . $project->id);
+        $response = $this->get('/project/'.$project->id);
         //Alors le nom de l'auteur du projet est sur la page de detail du projet
         $response->assertSee($project->user->name);
     }
@@ -81,53 +81,60 @@ class ProjectTest extends TestCase
     {
         //Etant donné un auteur crée et connecté
         $user = factory(User::class)->create();
+        $project = factory(Project::class)->make();
         $this->actingAs($user);
-//        $project = factory(Project::class)->create();
         $this->get('/add')->assertSee("<h1>Ajouter un projet</h1>");
         //Lorsque qu'il remplis le formulaire
         $request = [
-            'projectName'=>'test',
-            'descriptive'=>'toto',
+            'projectName' => $project->projectName,
+            'descriptive' => $project->descriptive,
         ];
-        $this->post('/project',$request);
+        $this->post('/project', $request);
         //Alors son projet est crée
         $response = $this->get('/project');
-        $response->assertSee('test');
+        $response->assertSee($project->projectName);
     }
 
     public function testNotShowFormProjectUser()
     {
-         $this->expectException(AuthenticationException::class);
-         $this->get('/add');
+        $this->expectException(AuthenticationException::class);
+        $this->get('/add');
     }
+
     public function testNotAddProject()
     {
         $this->expectException(AuthenticationException::class);
-        $request = ['projectName'=>'test', 'descriptive'=>'bop'];
-        $this->post('/project',$request);
+        $project = factory(Project::class)->make();
+        $request = ['projectName' => $project->projectName, 'descriptive' => $project->descriptive];
+        $this->post('/project', $request);
     }
-    public function NotDetailProjectUser()
-    {
-        $project = factory(Project::class)->create();
-        $user = factory(User::class)->create();
-        $this->actingAs($user);
-        $this->get('/project/'.$project->id.'/edit');
-        $this->assertSee("tu n'es pas l'auteur tu ne peux pas modifier");
-    }
+//    public function testNotDetailProjectUser()
+//    {
+//        $project = factory(Project::class)->create();
+//        $user = factory(User::class)->create();
+//        $this->actingAs($user);
+//        $response = $this->get('/project/' . $project->id . '/edit');
+//        $response->assertSee("<h1>tu n'es pas l'auteur tu ne peux pas modifier le projet</h1>");
+//    }
     public function testDetailProjectUser()
     {
+        $this->expectException(HttpException::class);
+        //création d'un projet d'un utilisateur(1)
+        $project = factory(Project::class)->create();
+        $project2 = factory(Project::class)->make();
+        //création d'un utilisateur (2)//
         $user = factory(User::class)->create();
+        //l'utilisateur 2 se connecte//
         $this->actingAs($user);
-
-        $this->get('/project/'.$project->id.'/edit')->assertSee("Modifier un projet");
-        $request = ['projectName'=>'test', 'descriptive'=>'bop'];
-        $this->put('/project',$request);
-        $response = $this->get('/project/'.$project->id);
-        $response->assertSee("test");
+        //L'utilisateur 2 remplis le formulaire
+        $request = ['projectName' => $project2->projectName, 'descriptive' => $project2->descriptive];
+        //L'utilisateur 2 essaye de modifier le formulaire
+        $this->put('/project/' . $project->id, $request);
+        //je verifie que le projet est non modifié
+        //$response2 = $this->get('/project/' . $project->id);
+        //$response2->assertDontSee($project2->projectName);
     }
-
 }
-
 
 
 

@@ -43,19 +43,20 @@ class ProjectController extends Controller
     }
     public function edit($projectcode) {
         $project = Project::find($projectcode);
-        if(Auth::user()->id == $project->user_id) {
-            return view('modification', compact('project'));
-        }else {
-            echo "tu n'est pas l'auteur tu ne peux pas modifier le projet";
-        }
+        return view('modification', compact('project'));
     }
 
     public function update(Request $request,$projectcode) {
 
         $project = Project::find($projectcode);
+        $user = $project->user->find($project->user_id);
         $project->projectName= $request->input('projectName');
         $project->descriptive = $request->input('descriptive');
-        $project->save();
+        if(Auth::user()->id == $user->id) {
+            $project->save();
+        }else {
+            abort(403);
+        }
         return redirect('/project/'.$projectcode);
     }
 }
