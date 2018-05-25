@@ -55,8 +55,8 @@ class DonationFee
         $summary = array('donation'=>$this->donation,
                          'fixedFee'=>Commission::fixedFee,
                          'commission'=>$this->getCommissionAmount(),
-                         'fixedAndCommission'=>$this->getFixedAndCommissionFeeAmount(),
-                         'amountCollected'=> $this->donation - $this->getFixedAndCommissionFeeAmount());
+                         'fixedAndCommission'=>$this->getLimitFixedFeeAndCommissionAmount(),
+                         'amountCollected'=> $this->donation - $this->getLimitFixedFeeAndCommissionAmount());
             return $summary;
     }
 }

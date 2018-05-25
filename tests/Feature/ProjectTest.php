@@ -82,17 +82,17 @@ class ProjectTest extends TestCase
         //Etant donné un auteur crée et connecté
         $user = factory(User::class)->create();
         $this->actingAs($user);
-        $project = factory(Project::class)->create();
+//        $project = factory(Project::class)->create();
         $this->get('/add')->assertSee("<h1>Ajouter un projet</h1>");
         //Lorsque qu'il remplis le formulaire
         $request = [
-            'projectName'=>$project->projectName,
-            'descriptive'=>$project->descriptive,
+            'projectName'=>'test',
+            'descriptive'=>'toto',
         ];
         $this->post('/project',$request);
         //Alors son projet est crée
         $response = $this->get('/project');
-        $response->assertSee($project->projectName);
+        $response->assertSee('test');
     }
 
     public function testNotShowFormProjectUser()
@@ -112,13 +112,13 @@ class ProjectTest extends TestCase
         $user = factory(User::class)->create();
         $this->actingAs($user);
         $this->get('/project/'.$project->id.'/edit');
-        $this->assertSee("tu n'est pas l'auteur tu ne peux pas modifier");
+        $this->assertSee("tu n'es pas l'auteur tu ne peux pas modifier");
     }
-    public function DetailProjectUser()
+    public function testDetailProjectUser()
     {
-        $project = factory(Project::class)->create();
         $user = factory(User::class)->create();
         $this->actingAs($user);
+
         $this->get('/project/'.$project->id.'/edit')->assertSee("Modifier un projet");
         $request = ['projectName'=>'test', 'descriptive'=>'bop'];
         $this->put('/project',$request);

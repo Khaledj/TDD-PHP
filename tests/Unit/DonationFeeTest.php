@@ -22,7 +22,7 @@ class DonationFeeTest extends TestCase
         $actual = $donationFees->getCommissionAmount();
 
         // Alors la Valeur de la commission doit être de 10
-       $expected = (100/100)*10;
+       $expected = 100/100*10;
        $this->assertEquals($expected, $actual);
    }
 
@@ -32,7 +32,7 @@ class DonationFeeTest extends TestCase
         $donationFees = new DonationFee(100, 10);
         // Lorsqu'on appel la méthode getAmountCollected()
         $actual = $donationFees->getAmountCollected();
-        // Alors la Valeur du montant perçu doit être de 90
+        // Alors la Valeur du montant perçu doit être de 40 (montant-commision-prix fixe)
         $expected = (100-10-50);
         $this->assertEquals($expected, $actual);
     }
@@ -68,7 +68,7 @@ class DonationFeeTest extends TestCase
     public function testLimitFixedFeeAndCommissionAmountGetter()
     {
         // Etant donné une donation supérieur  ou égale à 4500
-        $donationFees = new DonationFee(4500, 10);
+        $donationFees = new DonationFee(10000, 10);
 
         // Lorsqu'on appel la méthode getLimitFixedFeeAndCommissionAmount()
         $actual = $donationFees->getLimitFixedFeeAndCommissionAmount();
@@ -79,24 +79,24 @@ class DonationFeeTest extends TestCase
     }
     public function testArraySummary()
     {
-        $donationFees = new DonationFee(100, 10);
+        $donationFees = new DonationFee(10000, 10);
 
         $actual = $donationFees->getSummary();
 
         $this->assertArrayHasKey('donation',$actual);
-        $this->assertEquals(100, $actual['donation']);
+        $this->assertEquals(10000, $actual['donation']);
 
         $this->assertArrayHasKey('fixedFee',$actual);
         $this->assertEquals(50, $actual['fixedFee']);
 
         $this->assertArrayHasKey('commission',$actual);
-        $this->assertEquals(10, $actual['commission']);
+        $this->assertEquals(1000, $actual['commission']);
 
         $this->assertArrayHasKey('fixedAndCommission',$actual);
-        $this->assertEquals(60, $actual['fixedAndCommission']);
+        $this->assertEquals(500, $actual['fixedAndCommission']);
 
         $this->assertArrayHasKey('amountCollected',$actual);
-        $this->assertEquals(40, $actual['amountCollected']);
+        $this->assertEquals(9500, $actual['amountCollected']);
     }
 
 }

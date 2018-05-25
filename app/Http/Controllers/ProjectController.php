@@ -43,13 +43,12 @@ class ProjectController extends Controller
     }
     public function edit($projectcode) {
         $project = Project::find($projectcode);
-        if(Auth::user()->id == $projectcode) {
+        if(Auth::user()->id == $project->user_id) {
             return view('modification', compact('project'));
         }else {
             echo "tu n'est pas l'auteur tu ne peux pas modifier le projet";
         }
     }
-
 
     public function update(Request $request,$projectcode) {
 
